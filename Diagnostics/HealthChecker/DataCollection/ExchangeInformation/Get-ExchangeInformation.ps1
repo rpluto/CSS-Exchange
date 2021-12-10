@@ -8,7 +8,6 @@
 . $PSScriptRoot\Get-ExchangeApplicationConfigurationFileValidation.ps1
 . $PSScriptRoot\Get-ExchangeAppPoolsInformation.ps1
 . $PSScriptRoot\Get-ExchangeBuildVersionInformation.ps1
-. $PSScriptRoot\Get-ExchangeKnownIssuesBuildState.ps1
 . $PSScriptRoot\Get-ExchangeEmergencyMitigationServiceState.ps1
 . $PSScriptRoot\Get-ExchangeAMSIConfigurationState.ps1
 . $PSScriptRoot\Get-ExchangeServerCertificates.ps1
@@ -390,16 +389,6 @@ Function Get-ExchangeInformation {
                 $netFrameworkExchange.MinSupportedVersion = [HealthChecker.NetMajorVersion]::Net4d7d2
                 $netFrameworkExchange.MaxSupportedVersion = [HealthChecker.NetMajorVersion]::Net4d8
             }
-        }
-
-        try {
-            $buildInformation.KnownIssuesBuild = Get-ExchangeKnownIssuesBuildState `
-                -MajorVersion $buildInformation.MajorVersion `
-                -BuildAndRevision $buildAndRevision `
-                -ErrorAction Stop
-        } catch {
-            Write-Yellow "Failed to run Get-ExchangeKnownIssuesBuildState"
-            Invoke-CatchActions
         }
 
         try {
